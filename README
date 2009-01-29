@@ -1,1 +1,12 @@
 git-jira-attacher: A script to upload patches from Git to JIRA
+
+git-jira-attacher exports patches from Git using git format-patch,
+then attaches them to a JIRA issue using the SOAP API.
+
+Run without arguments for usage.  GIT_RANGE is a commit range, like
+master..HEAD.  git-jira-attacher expects commit messages to begin
+with (e.g.) "PROJECT-123. " (no quotes) in order to identify the
+relevant issue.  If all of the commits apply to a single issue,
+only one needs to have the tag.  Otherwise, every commit needs a tag.
+
+Thrift developers, don't forget to set "patch available" to true.
