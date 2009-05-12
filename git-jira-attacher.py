@@ -127,16 +127,24 @@ def generate_confirm_and_upload(base_url, range):
 
 
 def main():
-  if not (2 <= len(sys.argv) <= 3):
-    sys.exit("usage: jira_patches.py GIT_RANGE [BASE_URL]")
+  import optparse
+  parser = optparse.OptionParser(usage = "usage: %prog [options] {GIT_RANGE}")
+  parser.add_option("-j", "--jira_url",
+      default="https://issues.apache.org/jira/",
+      help="URL of JIRA instance to upload to")
+  (options, args) = parser.parse_args()
+  if len(args) != 1:
+    parser.print_help()
+    sys.exit()
 
-  #base_url 'http://localhost:8080/"
-  base_url = "https://issues.apache.org/jira/"
   if len(sys.argv) >= 3:
     base_url = sys.argv[2]
   range = sys.argv[1]
 
-  ret = generate_confirm_and_upload(base_url, range)
+  ret = generate_confirm_and_upload(
+      options.jira_url,
+      args[0],
+      )
   sys.exit(ret)
 
 
