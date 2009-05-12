@@ -66,10 +66,10 @@ def group_patches(patches):
   return grouped
 
 
-def get_soap_client(base_url):
+def get_soap_client(base_url, username = None):
   base_url = base_url.rstrip("/")
 
-  jirauser = getpass.getuser()
+  jirauser = username or getpass.getuser()
   jirapass = getpass.getpass()
 
   # Use urllib2 here instead of just passing the url directly,
@@ -119,10 +119,10 @@ def attach_files(grouped_patches, version, soap_client, auth):
   return all_okay
 
 
-def generate_confirm_and_upload(base_url, range, version):
+def generate_confirm_and_upload(base_url, range, version, username):
   with with_mkdtemp() as tmpdir:
     grouped_patches = group_patches(generate_patches(range, tmpdir))
-    soap_client, auth = get_soap_client(base_url)
+    soap_client, auth = get_soap_client(base_url, username)
     if confirm_attach(grouped_patches, soap_client, auth):
       return attach_files(grouped_patches, version, soap_client, auth)
 
@@ -130,6 +130,8 @@ def generate_confirm_and_upload(base_url, range, version):
 def main():
   import optparse
   parser = optparse.OptionParser(usage = "usage: %prog [options] {GIT_RANGE}")
+  parser.add_option("-u", "--username",
+      help="JIRA username if different from login name")
   parser.add_option("-p", "--patch_version", type="int", default=1,
       metavar="VERSION", help="patch version to prepend to attachments")
   parser.add_option("-j", "--jira_url",
@@ -148,6 +150,7 @@ def main():
       options.jira_url,
       args[0],
       options.patch_version,
+      options.username,
       )
   sys.exit(ret)
 
