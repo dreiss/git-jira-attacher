@@ -57,7 +57,8 @@ def group_patches(patches):
     infos = [ (all_ids[0], fname) for (_, fname) in infos ]
   else:
     # Can't figure out where to upload the others
-    raise Exception("Must have exactly one issue or an issue for each commit")
+    raise Exception("Must have exactly one issue or an issue for each commit."
+        "  Got %r" % all_ids)
 
   grouped = collections.defaultdict(list)
   for id, fname in infos:
