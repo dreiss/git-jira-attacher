@@ -5,7 +5,6 @@ from __future__ import with_statement
 import sys
 import contextlib
 import os
-import os.path
 import subprocess
 import re
 import collections
