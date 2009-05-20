@@ -10,3 +10,7 @@ relevant issue.  If all of the commits apply to a single issue,
 only one needs to have the tag.  Otherwise, every commit needs a tag.
 
 Thrift developers, don't forget to set "patch available" to true.
+
+
+This software is distributed under the MIT license.
+See COPYING for details.
